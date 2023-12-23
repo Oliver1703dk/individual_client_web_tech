@@ -10,12 +10,42 @@ use Illuminate\Support\Facades\Auth;
 
 class RegistrationController extends Controller
 {
+
+    protected $apiConsumerController;
+
+    public function __construct(ApiConsumerController $apiConsumerController)
+    {
+        $this->apiConsumerController = $apiConsumerController;
+    }
+
+
+    public function userRegPostAPI(Request $request) {
+        // Validate the request data here or assume it's already validated
+
+        // Prepare form data
+        $formData = $request->only(['email', 'password', 'rpassword', 'phone']);
+
+        // Call the API consumer method
+        $response = $this->apiConsumerController->userReg($formData);
+
+        // Handle the response based on the success key or HTTP status code
+        if (isset($response['success']) && $response['success']) {
+            return redirect()->route('homeIndex')->with('success', 'Registration successful.');
+        } else {
+            $errorMessage = $response['message'] ?? 'Registration failed.';
+            return redirect()->back()->with('error', $errorMessage);
+        }
+    }
+
+
+
+
     public function userReg()
     {
         return view('userReg');
     }
 
-    public function userRegPost(Request $request)
+    public function userRegPost2(Request $request)
     {
 
         // Validate the request data
@@ -59,7 +89,7 @@ class RegistrationController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('index'))->with('success', 'Register sucessfully');
+        return redirect(route('homeIndex'))->with('success', 'Register sucessfully');
 
     }
 

@@ -15,7 +15,7 @@ class ProductController extends Controller
         $this->apiConsumerController = $apiConsumerController;
     }
 
-    public function homeIndex()
+    public function homeIndexAPI()
     {
         // Fetch products from the API
         $products = $this->apiConsumerController->getProducts();
@@ -24,7 +24,7 @@ class ProductController extends Controller
         return view('index', compact('products'));
     }
 
-    public function catalogIndex()
+    public function catalogIndexAPI()
     {
         // Fetch products from the API
         $products = $this->apiConsumerController->getProducts();
@@ -33,7 +33,7 @@ class ProductController extends Controller
         return view('productsCatalog', compact('products'));
     }
 
-    public function showProduct(Request $request)
+    public function showProductAPI(Request $request)
     {
         $productId = $request->input('product_id');
         $product = $this->apiConsumerController->getProductById($productId);
@@ -46,24 +46,54 @@ class ProductController extends Controller
         }
     }
 
-    public function getProductById($productId)
-    {
-//        dd($productId);
-        try {
-            // Adjust the API request to include the product ID
-            $response = $this->client->request('GET', '/products/' . $productId);
+
+    public function addProductDBAPI(Request $request) {
+        $formData = $request->only([
+//            'name', 'price', 'qty', 'storage', 'CPU', 'RAM', 'SSD', 'Desc', 'Image'
+            'name', 'price', 'quantity', 'product_info1', 'product_info2', 'product_info3', 'product_info4', 'description', 'image'
+        ]);
+//        dd($formData);
+
+        //
+        if (!auth()->user() || !auth()->user()->admin) {
+//            dd("Was not admin");
+            return back()->with('error', "User not admin");
+        }
+
+        // Call the API consumer method
+        $response = $this->apiConsumerController->addProduct($formData);
+
+        if ($response['success']) {
+            return redirect()->route('homeIndex')->with('success', $response['message']);
+        } else {
 //            dd($response);
-            $productData = json_decode($response->getBody(), true);
-
-            // Create a Product model instance with the fetched data
-            $product = new Product($productData);
-
-            return $product;
-        } catch (\Exception $e) {
-            // Handle exception or log error
-            return null; // Return null in case of error or if the product is not found
+            return back()->with('error', $response['message']);
         }
     }
+
+
+    public function deleteProductAPI(Request $request) {
+        $productId = $request->input('product_id');
+
+        if (!auth()->user() || !auth()->user()->admin) {
+//            dd("Was not admin");
+            return back()->with('failed', "User not admin");
+        }
+
+        $response = $this->apiConsumerController->deleteProduct($productId);
+
+//        dd($response);
+
+        if ($response['success']) {
+            return redirect()->route('homeIndex')->with('success', $response['message']);
+        } else {
+            return redirect()->back()->with('error', $response['message']);
+        }
+    }
+
+
+
+
 
 
 

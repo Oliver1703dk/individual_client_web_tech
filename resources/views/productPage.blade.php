@@ -8,7 +8,7 @@
         <div>
             @auth()
                 @if(auth()->user() && auth()->user()->admin)
-                    <form method="POST" action={{ route('deleteProduct') }}>
+                    <form method="POST" action={{ route('deleteProduct', $product->id) }}>
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <label>

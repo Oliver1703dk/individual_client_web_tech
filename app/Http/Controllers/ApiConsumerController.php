@@ -23,6 +23,74 @@ class ApiConsumerController extends Controller
         ]);
     }
 
+
+    public function addProduct($formData) {
+        try {
+            $response = $this->client->request('POST', '/api/addProductDB', [
+                'form_params' => $formData]);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
+        }
+    }
+
+    public function deleteProduct($productId) {
+        try {
+            $response = $this->client->request('POST', '/api/deleteProduct/'. $productId);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
+        }
+    }
+
+
+
+    public function changePassword($userId, $formData) {
+        try {
+            $response = $this->client->request('POST', '/api/changePassword', [
+                'form_params' => array_merge($formData, ['user_id' => $userId])
+            ]);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
+        }
+    }
+
+
+    public function login($formData) {
+        try {
+            $response = $this->client->request('POST', '/api/login', [
+                'form_params' => $formData
+            ]);
+
+            // Decode and return the JSON response
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            // Return an array indicating failure and providing the exception message
+            return ['failed' => true, 'message' => 'Exception occurred: ' . $e->getMessage()];
+        }
+    }
+
+
+
+    public function userReg($formData) {
+        try {
+            // Make a POST request to the API endpoint for user registration
+            $response = $this->client->request('POST', '/api/userReg', [
+                'form_params' => $formData
+            ]);
+//            dd($response);
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
+        }
+    }
+
+
     public function addProductToCart($userId, $productId)
     {
         try {

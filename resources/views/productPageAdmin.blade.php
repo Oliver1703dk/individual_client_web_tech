@@ -5,8 +5,6 @@
 @section("content")
     <div class="flex-1">
 
-        <form method="POST" action={{ route('addProductDB') }}>
-            @csrf
 
             <form class="h-screen"
                   method="POST" action={{ route('addProductDB') }}>
@@ -30,49 +28,49 @@
 
                         <div>
                             <p class="text-xl font-bold w-full">Qty:</p>
-                            <input type="qty" name="qty" id="qty" placeholder="qty"
+                            <input type="quantity" name="quantity" id="quantity" placeholder="quantity"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">storage</p>
-                            <input type="storage" name="storage" id="storage" placeholder="storage"
+                            <input type="product_info1" name="product_info1" id="product_info1" placeholder="storage"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">CPU:</p>
-                            <input type="CPU" name="CPU" id="CPU" placeholder="CPU"
+                            <input type="product_info2" name="product_info2" id="product_info2" placeholder="CPU"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">RAM:</p>
-                            <input type="RAM" name="RAM" id="RAM" placeholder="RAM"
+                            <input type="product_info3" name="product_info3" id="product_info3" placeholder="RAM"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">SSD:</p>
-                            <input type="SSD" name="SSD" id="SSD" placeholder="SSD"
+                            <input type="product_info4" name="product_info4" id="product_info4" placeholder="SSD"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">Description:</p>
-                            <input type="Desc" name="Desc" id="Desc" placeholder="Desc"
+                            <input type="description" name="description" id="description" placeholder="Desc"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
 
                         <div>
                             <p class="text-xl font-bold">Picture Url:</p>
-                            <input name="Image" id="Image" placeholder="URL"
+                            <input name="image" id="image" placeholder="URL"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                    required="">
                         </div>
@@ -87,7 +85,6 @@
                     </div>
                 </div>
             </form>
-        </form>
     </div>
 
 

@@ -12,7 +12,7 @@
         </form>
     </div>
     <div>
-        <form method="GET" action={{ route('product.show', $Product['product']['id']) }}>
+        <form method="GET" action={{ route('showProduct', $Product['product']['id']) }}>
             @csrf
             <input type="hidden" name="product_id" value="{{ $Product['product']['id'] }}">
             <button class="bg-blue-500 text-white py-2 px-4 rounded">Click for More</button>
