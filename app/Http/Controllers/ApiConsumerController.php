@@ -19,7 +19,6 @@ class ApiConsumerController extends Controller
             'headers' => [
                 'Accept' => 'application/json',
             ],
-            // 'headers' => ['Authorization' => 'Bearer YOUR_ACCESS_TOKEN'] // If authentication is needed
         ]);
     }
 
@@ -70,7 +69,7 @@ class ApiConsumerController extends Controller
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
             // Return an array indicating failure and providing the exception message
-            return ['failed' => true, 'message' => 'Exception occurred: ' . $e->getMessage()];
+            return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
         }
     }
 
@@ -82,7 +81,6 @@ class ApiConsumerController extends Controller
             $response = $this->client->request('POST', '/api/userReg', [
                 'form_params' => $formData
             ]);
-//            dd($response);
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
@@ -94,30 +92,20 @@ class ApiConsumerController extends Controller
     public function addProductToCart($userId, $productId)
     {
         try {
-            // Make a POST request to the API endpoint for adding a product to the cart
-            $response = $this->client->request('POST', '/api/addProductToCart/' . $userId . '/' . $productId);
+            $this->client->request('POST', '/api/addProductToCart/' . $userId . '/' . $productId);
 
-            // Decode the JSON response
-//            $responseData = json_decode($response->getBody(), true);
 
-            // Handle the response...
         } catch (\Exception $e) {
-            // Handle exception...
         }
     }
 
     public function minusQuantity($userId, $productId)
     {
         try {
-            // Make a POST request to the API endpoint for adding a product to the cart
             $response = $this->client->request('POST', '/api/minusQuantity/' . $userId . '/' . $productId);
 
-            // Decode the JSON response
-//            $responseData = json_decode($response->getBody(), true);
 
-            // Handle the response...
         } catch (\Exception $e) {
-            // Handle exception...
         }
     }
 
@@ -129,10 +117,9 @@ class ApiConsumerController extends Controller
             if ($response->getStatusCode() == 200 && isset($responseData['cartItems'])) {
                 return $responseData['cartItems'];
             } else {
-                return []; // Return an empty array in case of error or no cart items
+                return []; // Return an empty array in case of no cart items
             }
         } catch (\Exception $e) {
-            // Optionally log the error or handle it as required
             return []; // Return an empty array in case of exception
         }
     }
@@ -146,10 +133,8 @@ class ApiConsumerController extends Controller
             ]);
 
 
-            // Decode the JSON response
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
-//            dd($e);
             return ['success' => false, 'message' => 'Exception occurred: ' . $e->getMessage()];
         }
     }
@@ -173,7 +158,6 @@ class ApiConsumerController extends Controller
 
             return $products;
         } catch (\Exception $e) {
-//            dd($e);
             return []; // Return an empty array in case of error
         }
     }
@@ -191,21 +175,9 @@ class ApiConsumerController extends Controller
             $product = new Product($productData);
             return $product;
         } catch (\Exception $e) {
-            // Handle exception or log error
             return null; // Return null in case of error
         }
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    // ... other methods to interact with different API endpoints
 }
