@@ -36,6 +36,7 @@ class ProductController extends Controller
     public function showProductAPI(Request $request)
     {
         $productId = $request->input('product_id');
+
         $product = $this->apiConsumerController->getProductById($productId);
 
         if ($product) {
@@ -62,7 +63,6 @@ class ProductController extends Controller
         if ($response['success']) {
             return redirect()->route('homeIndex')->with('success', $response['message']);
         } else {
-//            dd($response);
             return back()->with('error', $response['message']);
         }
     }
@@ -87,56 +87,6 @@ class ProductController extends Controller
 
 
 
-
-
-
-
-
-
-
-
-
-    public function deleteProduct(Request $request){
-        $productId = $request->input('product_id');
-        if(auth()->user()->admin){
-
-            // Find the product by ID
-            $product = Product::find($productId);
-
-            if ($product) {
-                // Delete the product
-                $product->delete();
-
-                // Redirect or return a response
-                return redirect()->route('index')->with('success', 'Product deleted successfully.');
-            } else {
-                // Handle the case where the product does not exist
-                return redirect()->back()->with('error', 'Product not found.');
-            }
-
-        }else{
-            return redirect()->back()->with('error', 'Product not found.');
-        }
-
-    }
-
-    public function productPage(Request $request)
-    {
-        $productId = $request->input('product_id');
-
-        $product = Product::find($productId);
-
-        // Check if product exists
-        if (!$product) {
-            return redirect()->back()->withErrors('Product not found.');
-        }
-
-
-
-        return view('productPage', compact('product'));
-
-
-    }
 
 
     public function productPageAdmin(){
